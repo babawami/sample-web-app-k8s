@@ -1,0 +1,59 @@
+version: '3'
+
+services:
+  postgres_db:
+    image: postgres
+    container_name: postgres_db
+    environment:
+      POSTGRES_PASSWORD: admin123
+      POSTGRES_USER: postgres
+      POSTGRES_DB: basic3tier
+    networks:
+      - basictiernet
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@example.com
+      PGADMIN_DEFAULT_PASSWORD: admin123
+    networks:
+      - basictiernet
+    ports:
+      - "82:80"
+    depends_on:
+      - postgres_db
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+
+  basic3tier-api:
+    image: andrewmon/sample-app-backend
+    container_name: basic3tier-api
+    networks:
+      - basictiernet
+    ports:
+      - "81:80"
+    depends_on:
+      - postgres_db
+      
+  basic3tier-frontend:
+    image: andrewmon/sample-app-frontend
+    container_name: basic3tier-frontend
+    networks:
+      - basictiernet
+    ports:
+      - "8080:80"
+    depends_on:
+      - postgres_db
+      - basic3tier-api
+
+networks:
+  basictiernet:
+
+volumes:
+  db_data:
+  pgadmin_data:
