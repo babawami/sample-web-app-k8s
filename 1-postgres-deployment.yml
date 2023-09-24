@@ -1,1 +1,33 @@
-
+# Deployment for postgres_db
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgresdb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgresdb
+  template:
+    metadata:
+      labels:
+        app: postgresdb
+    spec:
+      containers:
+      - name: postgresdb
+        image: postgres
+        env:
+        - name: POSTGRES_PASSWORD
+          value: admin123
+        - name: POSTGRES_USER
+          value: postgres
+        - name: POSTGRES_DB
+          value: basic3tier
+        ports:
+        - containerPort: 5432
+        volumeMounts:
+        - name: db-data
+          mountPath: /var/lib/postgresql/data
+      volumes:
+        - name: db-data
+          emptyDir: {}
