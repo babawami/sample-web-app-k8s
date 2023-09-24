@@ -1,0 +1,25 @@
+# Deployment for basic3tier-api
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: basic3tier-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: basic3tier-api
+  template:
+    metadata:
+      labels:
+        app: basic3tier-api
+    spec:
+      containers:
+      - name: basic3tier-api
+        image: andrewmon/sample-app-backend
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 80
+      tolerations:
+      - key: "example-key"
+        operator: "Exists"
+        effect: "NoSchedule"
