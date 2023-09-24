@@ -1,6 +1,6 @@
 // Wait for the document to be ready
 $(document).ready(function () {
-    let baseUrl = '';
+    let baseUrl = 'http://ec2-54-158-18-160.compute-1.amazonaws.com:31000/';
     let users = [];
     let activeUser = {};
     // Function to get users from 'api/user' endpoint and display them in the table
