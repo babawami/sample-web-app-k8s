@@ -1,0 +1,16 @@
+# Service for basic3tier-api
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: basic3tier-api
+  name: basic3tier-api
+spec:
+  type: NodePort
+  selector:
+    app: basic3tier-api
+  ports:
+  - port: 5000
+    targetPort: 80
+    nodePort: 31000
+    name: basic3tier-api
