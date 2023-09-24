@@ -1,0 +1,22 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: api-ingress
+  annotations:
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+    nginx.ingress.kubernetes.io/use-regex: 'true'
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      rewrite ^(/swagger)$ $1/ permanent;
+spec:
+  ingressClassName: 'nginx'
+  rules:
+  - http:
+      paths:
+      - path: /?(.*)
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: basic3tier-api
+            port:
+              number: 5000
