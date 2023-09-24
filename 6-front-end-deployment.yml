@@ -1,0 +1,22 @@
+# Deployment for basic3tier-frontend
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: basic3tier-frontend
+  name: basic3tier-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: basic3tier-frontend
+  template:
+    metadata:
+      labels:
+        app: basic3tier-frontend
+    spec:
+      containers:
+      - name: basic3tier-frontend
+        image: andrewmon/sample-app-frontend
+        ports:
+        - containerPort: 80
